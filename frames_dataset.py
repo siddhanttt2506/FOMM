@@ -54,7 +54,7 @@ def read_video(name, frame_shape):
 
     except Exception as e:
         print(f"Error reading {name}: {e}")
-        return None
+        return None
 
 
 class FramesDataset(Dataset):
