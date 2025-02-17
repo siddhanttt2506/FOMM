@@ -57,36 +57,46 @@ ap.add_argument("-v","--input_video", required=False, help="Path to video input"
 
 args = vars(ap.parse_args())
 
-def load_checkpoints(config_path, checkpoint_path, cpu=False):
-
+def load_checkpoints(config_path, checkpoint_path, cpu=True):
+    # Load configuration
     with open(config_path) as f:
         config = yaml.load(f, Loader=yaml.FullLoader)
 
+    # Initialize models
     generator = OcclusionAwareGenerator(**config['model_params']['generator_params'],
                                         **config['model_params']['common_params'])
-    if not cpu:
-        generator.cuda()
-
     kp_detector = KPDetector(**config['model_params']['kp_detector_params'],
                              **config['model_params']['common_params'])
-    if not cpu:
-        kp_detector.cuda()
-    
-    if cpu:
+
+    # Move models to CPU if specified or if CUDA is not available
+    if cpu or not torch.cuda.is_available():
+        device = torch.device('cpu')
+        generator.to(device)
+        kp_detector.to(device)
+    else:
+        device = torch.device('cuda')
+        generator.to(device)
+        kp_detector.to(device)
+
+    # Load checkpoint
+    if cpu or not torch.cuda.is_available():
         checkpoint = torch.load(checkpoint_path, map_location=torch.device('cpu'))
     else:
         checkpoint = torch.load(checkpoint_path)
- 
+
+    # Load state dicts into models
     generator.load_state_dict(checkpoint['generator'])
     kp_detector.load_state_dict(checkpoint['kp_detector'])
-    
-    if not cpu:
+
+    # Wrap models with DataParallel if CUDA is available and not running on CPU
+    if not cpu and torch.cuda.is_available():
         generator = DataParallelWithCallback(generator)
         kp_detector = DataParallelWithCallback(kp_detector)
 
+    # Set models to evaluation mode
     generator.eval()
     kp_detector.eval()
-    
+
     return generator, kp_detector
 
 print("[INFO] loading source image and checkpoint...")
@@ -102,13 +112,15 @@ source_image = resize(source_image,(256,256))[..., :3]
 
 generator, kp_detector = load_checkpoints(config_path='config/vox-256.yaml', checkpoint_path=checkpoint_path)
 
+print("still it's all about her")
+
 if not os.path.exists('output'):
     os.mkdir('output')
 
 
 relative=True
 adapt_movement_scale=True
-cpu=False
+cpu=True
 
 if video_path:
     cap = cv2.VideoCapture(video_path) 
@@ -119,6 +131,7 @@ else:
 
 fourcc = cv2.VideoWriter_fourcc(*'MJPG')
 out1 = cv2.VideoWriter('output/test.avi', fourcc, 12, (256*3 , 256), True)
+
 
 cv2_source = cv2.cvtColor(source_image.astype('float32'),cv2.COLOR_BGR2RGB)
 with torch.no_grad() :

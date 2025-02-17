@@ -38,7 +38,7 @@ matplotlib.use('Agg')
 warnings.filterwarnings("ignore")
 
 # Enable inline plotting (if using Jupyter Notebook)
-%matplotlib inline
+# %matplotlib inline
 
 
 def load_checkpoints(config_path, checkpoint_path, cpu=False):
@@ -217,8 +217,8 @@ def display_and_save(source, driving, generated, output_path='output.mp4', fps=2
 generator, kp_detector = load_checkpoints(config_path='config/vox-256.yaml', 
                             checkpoint_path="Your checkpoint path")
 
-source_image = imageio.imread("source_image_path")
-driving_video = imageio.mimread("driving video path")
+source_image = imageio.imread("input/Monalisa.png")
+driving_video = imageio.mimread("input\id10291#4aLg_keiGHw#001497#001678.mp4")
 
 #Resize inputs to 256x256
 source_image = resize(source_image, (256, 256))[..., :3]
