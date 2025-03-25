@@ -4,10 +4,10 @@ torchvision
 torchaudio
 
 
-attrs==24.3.0
-backcall==0.2.0
+attrs
+backcall
 bleach==6.1.0
-cffi==1.16.0
+# cffi==1.16.0
 cloudpickle==3.0.0
 colorama==0.4.6
 cycler==0.12.1
