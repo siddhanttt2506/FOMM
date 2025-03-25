@@ -11,9 +11,10 @@ The videos on the left show the driving videos. The first row on the right for e
 
 ![Demo](output.gif)
 
-### REPORT
+## REPORT
 
-View the report [here](https://your-username.github.io/your-repo-name/report.pdf](https://github.com/siddhanttt2506/FOMM/blob/main/FOMM_report.pdf).
+View the report [here](https://raw.githubusercontent.com/siddhanttt2506/FOMM/main/FOMM_report.pdf).
+
 
 ### Installation
 
