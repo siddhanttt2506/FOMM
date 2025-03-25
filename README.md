@@ -10,6 +10,8 @@ The videos on the left show the driving videos. The first row on the right for e
 ### VoxCeleb Dataset
 [![Watch the video](https://raw.githubusercontent.com/shrutisekhar02/FOMM/main/input/Monalisa.png)](https://raw.githubusercontent.com/shrutisekhar02/FOMMy/main/output.mp4)
 
+![Demo](output.gif)
+
 ### Installation
 
 To install the dependencies run:
