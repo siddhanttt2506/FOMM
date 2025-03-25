@@ -7,8 +7,7 @@ This repository contains an implementation of the [First Order Motion model](htt
 ## Example animations
 The videos on the left show the driving videos. The first row on the right for each dataset shows the source videos. The bottom row contains the animated sequences with motion transferred from the driving video and object taken from the source image. We trained a separate network for each task.
 
-### VoxCeleb Dataset
-[![Watch the video](https://raw.githubusercontent.com/shrutisekhar02/FOMM/main/input/Monalisa.png)](https://raw.githubusercontent.com/shrutisekhar02/FOMMy/main/output.mp4)
+###   DEMO
 
 ![Demo](output.gif)
 
